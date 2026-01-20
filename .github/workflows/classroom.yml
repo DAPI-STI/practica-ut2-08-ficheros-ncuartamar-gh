@@ -1,0 +1,60 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: EX01 - count_word
+      id: ex01-count_word
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: EX01 - count_word
+        setup-command: python -m pip install -r requirements.txt
+        command: python -m pytest -q -k test_ex01_count_word
+        timeout: 30
+        max-score: 25
+    - name: EX02 - write_final_grade
+      id: ex02-write_final_grade
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: EX02 - write_final_grade
+        setup-command: python -m pip install -r requirements.txt
+        command: python -m pytest -q -k test_ex02_write_final_grade
+        timeout: 30
+        max-score: 20
+    - name: EX03 - csv_average
+      id: ex03-csv_average
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: EX03 - csv_average
+        setup-command: python -m pip install -r requirements.txt
+        command: python -m pytest -q -k test_ex03_csv_average
+        timeout: 30
+        max-score: 20
+    - name: EX04 - phonebook
+      id: ex04-phonebook
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: EX04 - phonebook
+        setup-command: python -m pip install -r requirements.txt
+        command: python -m pytest -q -k test_ex04_phonebook
+        timeout: 30
+        max-score: 35
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        EX01-COUNT_WORD_RESULTS: "${{steps.ex01-count_word.outputs.result}}"
+        EX02-WRITE_FINAL_GRADE_RESULTS: "${{steps.ex02-write_final_grade.outputs.result}}"
+        EX03-CSV_AVERAGE_RESULTS: "${{steps.ex03-csv_average.outputs.result}}"
+        EX04-PHONEBOOK_RESULTS: "${{steps.ex04-phonebook.outputs.result}}"
+      with:
+        runners: ex01-count_word,ex02-write_final_grade,ex03-csv_average,ex04-phonebook
