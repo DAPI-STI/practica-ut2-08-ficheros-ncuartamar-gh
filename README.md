@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/yITl1O86)
 # Práctica 02.07 · Ficheros (texto y CSV)
 
 En esta práctica vas a trabajar con **lectura y escritura de ficheros** en Python con ejercicios
